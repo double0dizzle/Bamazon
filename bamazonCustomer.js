@@ -81,8 +81,8 @@ function firstPrompt() {
        console.log(quantity);
        if (answers.productQuantity >= 1) {
         connection.query("UPDATE products SET stock_quantity = stock_quantity - " + quantity + "  WHERE item_id = " + ID , function(error, results){
-        console.log("update")
         loadProduct();
+        console.log("Your price is" + quantity * " price")
 
         })
        } else {
@@ -90,6 +90,19 @@ function firstPrompt() {
        }
    }
    firstPrompt();
+
+//    function price(answers) {
+//     var quantity = parseInt(answers.productQuantity);
+//     var ID = parseInt(answers.productID);
+//     console.log(quantity);
+//     if (answers.productQuantity >= 1) {
+//      connection.query("UPDATE products SET stock_quantity = stock_quantity - " + quantity + "  WHERE item_id = " + ID , function(error, results){
+//      console.log("update")
+//      loadProduct();
+
+//      })
+//     }
+//    }
 
 
 
