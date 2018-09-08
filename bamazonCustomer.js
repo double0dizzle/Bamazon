@@ -69,17 +69,17 @@ function firstPrompt() {
         //            case "1":
         //            quantity1();
         //            break}
-        quantity1(answers);
+        updateQuantity(answers);
         
       });
   }
 
-   function quantity1(answers){
+   function updateQuantity(answers){
        console.log(answers);
        var quantity = parseInt(answers.productQuantity);
        var ID = parseInt(answers.productID);
        console.log(quantity);
-       if (answers.productQuantity <= 16) {
+       if (answers.productQuantity >= 1) {
         connection.query("UPDATE products SET stock_quantity = stock_quantity - " + quantity + "  WHERE item_id = " + ID , function(error, results){
         console.log("update")
         loadProduct();
@@ -91,10 +91,5 @@ function firstPrompt() {
    }
    firstPrompt();
 
-//   .then(function(answer) {
-//     switch (answer.action) {
-//     case "Find songs by artist":
-//       artistSearch();
-//       break;
 
 
