@@ -1,1 +1,2 @@
 # Bamazon
+Bamazon is an app that uses a MySQL database to give the user a selection of products to choose from and purchase.  The user will be prompted which product ID they'd like to purchase, followed by how many they'd like.  If the user's desired quantity is more than what Bamazon has in stock, then they will be alerted "Insufficient Quantity," and the transaction will be voided.
