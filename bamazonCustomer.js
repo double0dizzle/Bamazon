@@ -28,6 +28,7 @@ connection.query("SELECT * FROM products", function(error, results){
     if(error) throw error;
     // console.log(results);
     console.table(results);
+    
  });
 }
 
@@ -58,17 +59,11 @@ function firstPrompt() {
         message: "How many would you like?",
         choices: []
       },
+      {
+          name: "price",
+      }
       
       ]).then(function(answers) {
-        //console.log(answers);
-        // connection.query("SELECT item_id FROM products", function(error, results){
-        //     if(error) throw error});
-        //     // console.log(error);
-            
-        //     switch (answers.productID) {
-        //            case "1":
-        //            quantity1();
-        //            break}
         updateQuantity(answers);
         
       });
@@ -78,11 +73,17 @@ function firstPrompt() {
        console.log(answers);
        var quantity = parseInt(answers.productQuantity);
        var ID = parseInt(answers.productID);
+       var price = connection.query("SELECT price FROM products WHERE item_id =" + " " + ID);
+       var price1 = parseInt(price);
        console.log(quantity);
-       if (answers.productQuantity >= 1) {
+       if (answers.productQuantity <= 1) {
+        connection.query("SELECT price FROM products WHERE item_id =" + " " + ID, function(error, results){
+            loadProduct();
+            console.log("Your price is" + price)
+        });
         connection.query("UPDATE products SET stock_quantity = stock_quantity - " + quantity + "  WHERE item_id = " + ID , function(error, results){
-        loadProduct();
-        console.log("Your price is" + quantity * " price")
+        // loadProduct();
+        
 
         })
        } else {
