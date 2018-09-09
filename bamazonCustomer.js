@@ -57,15 +57,11 @@ function firstPrompt() {
         name: "productQuantity",
         type: "input",
         message: "How many would you like?",
-        choices: []
       },
-      {
-          name: "price",
-      }
       
       ]).then(function(answers) {
         updateQuantity(answers);
-        
+        getPrice(answers);
       });
   }
 
@@ -73,24 +69,36 @@ function firstPrompt() {
        console.log(answers);
        var quantity = parseInt(answers.productQuantity);
        var ID = parseInt(answers.productID);
-       var price = connection.query("SELECT price FROM products WHERE item_id =" + " " + ID);
-       var price1 = parseInt(price);
-       console.log(quantity);
-       if (answers.productQuantity <= 1) {
-        connection.query("SELECT price FROM products WHERE item_id =" + " " + ID, function(error, results){
-            loadProduct();
-            console.log("Your price is" + price)
-        });
+    //    var price = connection.query("SELECT price FROM products WHERE item_id =" + " " + ID);
+       connection.query("SELECT stock_quantity FROM products WHERE item_id =" + " " + ID, function(error, results){
+        var stockQuantity = results[0].stock_quantity;
+       if (quantity <= stockQuantity) {
         connection.query("UPDATE products SET stock_quantity = stock_quantity - " + quantity + "  WHERE item_id = " + ID , function(error, results){
-        // loadProduct();
-        
-
+        loadProduct();
         })
        } else {
            console.log("Insufficient quantity!")
        }
+    });
    }
+    
+   function getPrice(answers){
+      var quantity1 = parseInt(answers.productQuantity)
+      var ID1 = parseInt(answers.productID)
+      connection.query("SELECT price FROM products WHERE item_id =" + " " + ID1, function(error, results){
+        //   console.log(ID1, quantity1, results[0].price)
+          var price = parseInt(results[0].price)* quantity1;
+          console.log("Your Price is: $" + price);
+          
+      });
+   }
+
+
+
+
    firstPrompt();
+
+   
 
 //    function price(answers) {
 //     var quantity = parseInt(answers.productQuantity);
